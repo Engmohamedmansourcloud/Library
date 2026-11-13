@@ -102,7 +102,7 @@ async function out(){await sb.auth.signOut();me=null;C={};scr='login';msg='';ren
 /* ---------- data ---------- */
 async function load(t){var r;
  if(t=='att'){r=await sb.from('attendance').select('at,reason').eq('student_id',me.id).is('out_at',null).maybeSingle();if(!E(r))C.open=r.data}
- if(t=='ac'){r=await sb.from('profiles').select('id,full_name,section,gender,code,role,card_path').eq('status','approved').order('full_name').limit(1000);if(!E(r))C.ac=r.data}
+ if(t=='ac'){r=await sb.from('profiles').select('id,full_name,section,gender,code,role,card_path').eq('status','approved').neq('role','manager').order('full_name').limit(1000);if(!E(r))C.ac=r.data}
  if(t=='books'||t=='bk'){r=await sb.from('books').select('*').order('dept').order('title');if(!E(r))C.books=r.data;
   if(t=='books'){r=await sb.from('loans').select('book_id,status').eq('student_id',me.id).in('status',['pending','approved']);if(!E(r))C.act=r.data}}
  if(t=='my'){r=await sb.from('loans').select('id,status,created_at,books(title)').eq('student_id',me.id).order('created_at',{ascending:false});if(!E(r))C.my=r.data}
